@@ -1,7 +1,7 @@
 <script setup>
 import {ref, computed} from 'vue'
 
-const question=ref([
+const questions=ref([
   {
     question: 'Framework backendowy w którym piszemy w Pythonie?',
     answer: 0,
@@ -24,17 +24,17 @@ const question=ref([
 const quizCompleted=ref(false)
 const currentQuestion=ref(0)
 const score =computed(()=>{
-  let value=0;
-  question.value.map(q=>{
+  let value=0
+  questions.value.map(q=>{
     if(q.selected==q.answer){
       value++
     }
   })
-  return value;
+  return value
 })
 
 const getCurrentQuestion=computed(()=>{
-  let question = question.value[currentQuestion.value]
+  let question = questions.value[currentQuestion.value]
   question.index=currentQuestion.value
   return question
 })
@@ -52,10 +52,18 @@ const NextQuestion=()=>{
 </script>
 
 <template>
-  <h1>Hel</h1>
+  <main class="app">
+    <h1>QUIZ</h1>
+    <section class="quiz">
+      <div class="quiz-info">
+        <span class="question"> {{ getCurrentQuestion.question }} </span>
+      </div>
+    </section>
+   
+  </main>
 </template>
 
-<style scoped>
+<style>
 *{
   margin: 0;
   padding: 0;

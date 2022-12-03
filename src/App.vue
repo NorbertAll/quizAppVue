@@ -57,7 +57,30 @@ const NextQuestion=()=>{
     <section class="quiz">
       <div class="quiz-info">
         <span class="question"> {{ getCurrentQuestion.question }} </span>
+        <span class="score">Score {{score}}/{{questions.length}}</span>
       </div>
+      <div class="options">
+        <label v-for="(option, index) in getCurrentQuestion.options" :key="index" :class="`option ${
+          getCurrentQuestion.selected==index
+            ?index=getCurrentQuestion.answer 
+              ? 'correct' :'wrong'
+            :''
+        }${
+          getCurrentQuestion.selected !=null &&
+          index != getCurrentQuestion.selected
+            ?'disable'
+            :''
+        }`">
+          <input type="radio" 
+          :name="getCurrentQuestion.index" 
+          :value="index" 
+          v-model="getCurrentQuestion.selected"
+          :disabled="getCurrentQuestion.selected"
+          @change="SetAnswer">
+          <span>{{option}}</span>
+        </label>
+      </div>
+      
     </section>
    
   </main>

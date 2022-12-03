@@ -26,7 +26,7 @@ const currentQuestion=ref(0)
 const score =computed(()=>{
   let value=0
   questions.value.map(q=>{
-    if(q.selected==q.answer){
+    if(q.selected!=null && q.answer == q.selected){
       value++
     }
   })
@@ -39,30 +39,31 @@ const getCurrentQuestion=computed(()=>{
   return question
 })
 const SetAnswer=e=>{
-  question.value[currentQuestion.value].selected=e.target.value
+  questions.value[currentQuestion.value].selected=e.target.value
   e.target.value=null
 }
 const NextQuestion=()=>{
-  if(currentQuestion.value<question.value.length - 1){
+  if(currentQuestion.value<questions.value.length - 1){
     currentQuestion.value++
-  }else{
-    quizCompleted.value=true
+    return
   }
+    quizCompleted.value=true
+  
 }
 </script>
 
 <template>
   <main class="app">
     <h1>QUIZ</h1>
-    <section class="quiz">
+    <section class="quiz" v-if="!quizCompleted">
       <div class="quiz-info">
         <span class="question"> {{ getCurrentQuestion.question }} </span>
         <span class="score">Score {{score}}/{{questions.length}}</span>
       </div>
       <div class="options">
-        <label v-for="(option, index) in getCurrentQuestion.options" :key="index" :class="`option ${
+        <label v-for="(option, index) in getCurrentQuestion.options" :for="'option'+index" :class="`option ${
           getCurrentQuestion.selected==index
-            ?index=getCurrentQuestion.answer 
+            ?index==getCurrentQuestion.answer 
               ? 'correct' :'wrong'
             :''
         }${
@@ -72,6 +73,7 @@ const NextQuestion=()=>{
             :''
         }`">
           <input type="radio" 
+          :id="'option'+index"
           :name="getCurrentQuestion.index" 
           :value="index" 
           v-model="getCurrentQuestion.selected"
@@ -80,7 +82,24 @@ const NextQuestion=()=>{
           <span>{{option}}</span>
         </label>
       </div>
-      
+      <button
+        @click="NextQuestion"
+        :disable="!getCurrentQuestion.selected">
+        {{
+          getCurrentQuestion.index == questions.length - 1
+            ?'Finish'
+            :getCurrentQuestion.selected ==null
+              ?'Wybierz odpowiedź'
+              :'Następne pytanie'
+        }}
+        
+       
+      </button>
+    </section>
+    <section v-else>
+      <h2>Skończyłeś test</h2>
+      <p>Twój wynik to: {{score}}/{{questions.length}}</p>
+
     </section>
    
   </main>

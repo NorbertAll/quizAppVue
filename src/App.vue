@@ -57,8 +57,8 @@ const NextQuestion=()=>{
     <h1>QUIZ</h1>
     <section class="quiz" v-if="!quizCompleted">
       <div class="quiz-info">
-        <span class="question"> {{ getCurrentQuestion.question }} </span>
-        <span class="score">Score {{score}}/{{questions.length}}</span>
+        <span class="question"> {{ getCurrentQuestion.question }}                </span>
+        <span class="score">     Score {{score}}/{{questions.length}}            </span>
       </div>
       <div class="options">
         <label v-for="(option, index) in getCurrentQuestion.options" :for="'option'+index" :class="`option ${
@@ -113,7 +113,94 @@ const NextQuestion=()=>{
   font-family: 'Montserrat', sans-serif;
 }
 body{
-  background-color: rgba(240, 248, 255, 0.163);
+  background-color: #e4f1fe;
   color: black;
+}
+.app{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  min-height: 100vh;
+}
+h1{
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+.quiz{
+  background-color: #8dc6ff;
+  padding: 1rem;
+  width: 100%;
+  max-width: 640px;
+  border-radius: 0.5rem;
+}
+.quiz-info{
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+.quiz-info .question{
+  color: #22313f;
+  font-size: 1.25rem;
+}
+.quiz-info .score{
+  color: #34495e;
+}
+.options{
+  margin-bottom: 1rem;
+}
+.option{
+  display: block;
+  color: white;
+  padding: 1rem;
+  background-color: #34495e;
+  margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.option:hover{
+  color: black;
+  background-color: #e4f1fe;
+}
+.option.correct{
+  background-color: #2cce7d;
+}
+.option.wrong{
+  background-color: red;
+}
+.option:last-of-type{
+  margin-bottom: 0;
+}
+.option.disable{
+  opacity: 0.5;
+}
+.option input{
+  display: none;
+}
+button{
+  appearance: none;
+  outline: none;
+  border:none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  background-color: #2cce7d;
+  color: #2d213f;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  border-radius: 0.5rem;
+}
+button:disabled {
+  opacity: 0.5;
+}
+h2{
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+p{
+  font-size: 1.25rem;
+  text-align: center;
 }
 </style>
